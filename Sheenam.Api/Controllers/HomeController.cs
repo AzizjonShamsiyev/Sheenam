@@ -1,0 +1,15 @@
+﻿//===========================================
+//Copyright (c) Coalition of Good-Hearted Engineers
+//Free To Use Comfort and Peace
+//============================================
+
+using Microsoft.AspNetCore.Mvc;
+using RESTFulSense.Controllers;
+
+public class HomeController : RESTFulController
+{
+    [Route("api/[controller]")]
+    [HttpGet]
+    public ActionResult<string> Get() =>
+       Ok("Hello Mario, the princess is in another castle");
+}
