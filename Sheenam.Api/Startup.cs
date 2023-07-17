@@ -5,10 +5,12 @@
     
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Sheenam.Api.Brokers.Storage;
 
 namespace Sheenam.Api
 {
@@ -21,32 +23,39 @@ namespace Sheenam.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSwaggerGen(option =>
+            var apiInfo = new OpenApiInfo
             {
-                var ApiInfo = new OpenApiInfo { Title = "Sheenam.Api", Version = "v1" };
+                Title = "Sheenam.Api",
+                Version = "v1"
+            };
+
+            services.AddDbContext<StorageBroker>();
+            services.AddControllers();
+
+            services.AddSwaggerGen(option =>
+            {                
                 option.SwaggerDoc(
                     name: "v1", 
-                    info: ApiInfo);
+                    info: apiInfo);
             });
         }
 
-        public void Configure(IApplicationBuilder application, IWebHostEnvironment environment)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
             if (environment.IsDevelopment())
             {
-                application.UseSwagger();
-                application.UseDeveloperExceptionPage();
-                application.UseSwaggerUI(option => option.SwaggerEndpoint(
+                app.UseSwagger();
+                app.UseDeveloperExceptionPage();
+                app.UseSwaggerUI(option => option.SwaggerEndpoint(
                     url:"/swagger/v1/swagger.json", 
                     name: "Sheenam.Api v1"));
             }
 
-            application.UseHttpsRedirection();
-            application.UseRouting();
-            application.UseAuthorization();
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
 
-            application.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints =>
                  endpoints.MapControllers());
         }
     }
