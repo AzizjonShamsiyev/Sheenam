@@ -22,6 +22,7 @@ namespace Sheenam.Api.Brokers.Storage
                 await broker.Guests.AddAsync(guest);
             
             await broker.SaveChangesAsync();
+
             return guestEntityEntry.Entity;
         }
     }
