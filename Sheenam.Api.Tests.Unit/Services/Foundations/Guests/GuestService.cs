@@ -10,7 +10,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         public GuestService(IStorageBroker storageBroker) =>
             this.storageBroker = storageBroker;
 
-        public ValueTask<Guest> AddGuestAsync(Guest guests) =>
-            this.storageBroker.InsertGuestAsync(guests);
+        public async ValueTask<Guest> AddGuestAsync(Guest guest) =>
+            await this.storageBroker.InsertGuestAsync(guest);
     }
 }
