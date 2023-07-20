@@ -13,12 +13,12 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
     public partial class GuestServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
-        private readonly IGuestSevice guestSevice;
+        private readonly IGuestSevice guestService;
         
         public GuestServiceTests()
         {
             this.storageBrokerMock = new Mock<IStorageBroker>();
-            this.guestSevice =
+            this.guestService =
                 new GuestService(storageBroker: this.storageBrokerMock.Object);
         }
 

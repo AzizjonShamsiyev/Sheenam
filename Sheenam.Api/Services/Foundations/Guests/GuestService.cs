@@ -5,6 +5,7 @@
 
 using Sheenam.Api.Brokers.Storage;
 using Sheenam.Api.Models.Foundations.Guests;
+using System.Threading.Tasks;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
