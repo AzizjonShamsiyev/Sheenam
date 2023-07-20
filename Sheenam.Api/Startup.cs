@@ -2,10 +2,9 @@
 //Copyright (c) Coalition of Good-Hearted Engineers
 //Free To Use To Find Comfort and Peace
 //============================================
-    
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,11 +41,6 @@ namespace Sheenam.Api
             });
         }
 
-        private static void AddBrokers(IServiceCollection services)
-        {
-            services.AddTransient<IStorageBroker, StorageBroker>();
-            services.AddTransient<ILoggingBroker, LoggingBroker>();
-        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
@@ -65,6 +59,12 @@ namespace Sheenam.Api
 
             app.UseEndpoints(endpoints =>
                  endpoints.MapControllers());
+        }
+
+        private static void AddBrokers(IServiceCollection services)
+        {
+            services.AddTransient<IStorageBroker, StorageBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
         }
     }
 }
