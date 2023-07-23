@@ -7,6 +7,7 @@ using Moq;
 using Sheenam.Api.Brokers.Loggings;
 using Sheenam.Api.Brokers.Storage;
 using Sheenam.Api.Models.Foundations.Guests;
+using Sheenam.Api.Services.Foundations.Guests;
 using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 using Xeptions;
