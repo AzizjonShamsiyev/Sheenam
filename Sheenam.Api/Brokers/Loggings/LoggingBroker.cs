@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿//===========================================
+//Copyright (c) Coalition of Good-Hearted Engineers
+//Free To Use To Find Comfort and Peace
+//============================================
+
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace Sheenam.Api.Brokers.Loggings
