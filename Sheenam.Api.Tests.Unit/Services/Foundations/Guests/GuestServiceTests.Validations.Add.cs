@@ -46,8 +46,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData(" ")]
-        
+        [InlineData(" ")]        
         public async Task ShouldThowValidationExceptionOnAddIfGuestIsInvalidAndLogItAsync(
             string invalidText)
         {
@@ -79,6 +78,10 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 key: nameof(Guest.Email),
                 values: "Text is required");
 
+            invalidGuestException.AddData(
+                key: nameof(Guest.Address),
+                values: "Text is required");
+
             var expectedGuestValidationException =
                 new GuestValidationException(invalidGuestException);
 
@@ -87,7 +90,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 this.guestService.AddGuestAsync(invalidGuest);
 
             //then
-            await Assert.ThrowsAsync<GuestValidationException>(async ()=>
+            await Assert.ThrowsAsync<GuestValidationException>(() =>
                 addGuestTask.AsTask());
 
             this.loggingBrokerMock.Verify( broker =>
@@ -101,7 +104,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
-
         }
     }
 }
