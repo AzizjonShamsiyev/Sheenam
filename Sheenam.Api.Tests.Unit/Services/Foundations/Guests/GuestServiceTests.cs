@@ -19,6 +19,21 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private readonly Mock<IStorageBroker> storageBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly IGuestSevice guestService;
+
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 9).GetValue();
+
+        private static T GetInvalidEnum<T>()
+        {
+            int randomNumber = GetRandomNumber();
+
+            while (Enum.IsDefined(typeof(T),randomNumber) is true)
+            {
+                randomNumber = GetRandomNumber();
+            }
+
+            return(T)(object)randomNumber;
+        }
         
         public GuestServiceTests()
         {
