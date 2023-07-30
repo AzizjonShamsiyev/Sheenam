@@ -3,12 +3,14 @@
 //Free To Use To Find Comfort and Peace
 //============================================
 
+using Microsoft.Data.SqlClient;
 using Moq;
 using Sheenam.Api.Brokers.Loggings;
 using Sheenam.Api.Brokers.Storage;
 using Sheenam.Api.Models.Foundations.Guests;
 using Sheenam.Api.Services.Foundations.Guests;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using Tynamix.ObjectFiller;
 using Xeptions;
 
@@ -50,6 +52,9 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static SqlException GetSqlError() =>
+            (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
 
         private Expression<Func<Xeption,bool>> SameExceptionAs(Xeption expectedException)
         {
