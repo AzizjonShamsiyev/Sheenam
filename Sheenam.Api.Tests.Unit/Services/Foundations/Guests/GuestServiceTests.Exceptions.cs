@@ -3,6 +3,7 @@
 //Free To Use To Find Comfort and Peace
 //============================================
 
+using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
 using Moq;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
@@ -44,6 +45,47 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
                     expectedGuestDependencyException))),
+                    Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldTrowDependencyValidationOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
+        {
+            //given
+            Guest someGuest = CreateRandomGuest ();
+            string someMessage = GetRandomString();
+
+            var duplicateKeyException = 
+                new DuplicateKeyException(someMessage);
+
+            var alredyExistGuestException =
+                new AlreadyExistGuestException(duplicateKeyException);
+
+            var guestDependencyValidationException =
+                new GuestDependencyException(alredyExistGuestException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertGuestAsync(someGuest))
+                .ThrowsAsync(duplicateKeyException);
+
+            //when
+            ValueTask<Guest> addGuestTask =
+                this.guestService.AddGuestAsync(someGuest);
+
+            //then
+            await Assert.ThrowsAsync<GuestDependencyValidationException>(() =>
+                addGuestTask.AsTask());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertGuestAsync(someGuest),
+                Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    guestDependencyValidationException))),
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();

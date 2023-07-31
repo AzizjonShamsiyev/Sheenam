@@ -49,9 +49,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
 
         private GuestDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
         {
-            var guestDependencyException =
-                new GuestDependencyException(exception);
-
+            var guestDependencyException = new GuestDependencyException(exception);
             this.loggingBroker.LogCritical(guestDependencyException);
 
             return guestDependencyException;
