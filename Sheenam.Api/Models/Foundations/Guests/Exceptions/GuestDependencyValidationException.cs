@@ -5,13 +5,13 @@
 
 using Xeptions;
 
-namespace Sheenam.Api.Services.Foundations.Guests.Exceptions
+namespace Sheenam.Api.Models.Foundations.Guests.Exceptions
 {
     public class GuestDependencyValidationException : Xeption
     {
         public GuestDependencyValidationException(Xeption innerException)
-            :base(message: "Guest dependency validation error occurred, fix the errorsand try again",
+            : base(message: "Guest dependency validation error occurred, fix the errorsand try again",
                  innerException)
-        { }     
+        { }
     }
 }
