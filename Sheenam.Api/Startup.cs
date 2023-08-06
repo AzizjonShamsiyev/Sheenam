@@ -19,7 +19,7 @@ namespace Sheenam.Api
     public class Startup
     {
         public Startup(IConfiguration configuration) =>
-            Configuration = configuration;        
+            Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -52,7 +52,7 @@ namespace Sheenam.Api
                 app.UseSwagger();
                 app.UseDeveloperExceptionPage();
                 app.UseSwaggerUI(option => option.SwaggerEndpoint(
-                    url:"/swagger/v1/swagger.json", 
+                    url: "/swagger/v1/swagger.json",
                     name: "Sheenam.Api v1"));
             }
 
@@ -70,7 +70,7 @@ namespace Sheenam.Api
             services.AddTransient<ILoggingBroker, LoggingBroker>();
         }
 
-        private static void AddFoundationService (IServiceCollection services)
+        private static void AddFoundationService(IServiceCollection services)
         {
             services.AddTransient<IGuestSevice, GuestService>();
         }

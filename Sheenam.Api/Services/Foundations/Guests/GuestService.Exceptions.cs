@@ -27,34 +27,34 @@ namespace Sheenam.Api.Services.Foundations.Guests
             {
                 throw CreateAndLogValidationException(nullGuestException);
             }
-            catch(InvalidGuestException invalidGuestException) 
+            catch (InvalidGuestException invalidGuestException)
             {
                 throw CreateAndLogValidationException(invalidGuestException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
                 var failedGuestStorageException = new FailedGuestStorageException(sqlException);
 
                 throw CreateAndLogCriticalDependencyException(failedGuestStorageException);
             }
-            catch(DuplicateKeyException duplicateKeyException)
+            catch (DuplicateKeyException duplicateKeyException)
             {
-                var alreadyExistGuestException = 
+                var alreadyExistGuestException =
                     new AlreadyExistGuestException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistGuestException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                var failedGuestServiceException = 
+                var failedGuestServiceException =
                     new FailedGuestServiceException(exception);
 
                 throw CreateAndLogServiceException(failedGuestServiceException);
             }
         }
-         
+
         private GuestValidationException CreateAndLogValidationException(Xeption exception)
-        { 
+        {
             var guestValidationException =
                  new GuestValidationException(exception);
 
@@ -74,7 +74,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
         private GuestDependencyValidationException CreateAndLogDependencyValidationException(
             Xeption exception)
         {
-            var guestDependencyValidationException = 
+            var guestDependencyValidationException =
                 new GuestDependencyValidationException(exception);
 
             this.loggingBroker.LogError(guestDependencyValidationException);

@@ -11,7 +11,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
 {
     public partial class GuestService
     {
-        private void ValidateGuestOnAdd(Guest guest) 
+        private void ValidateGuestOnAdd(Guest guest)
         {
             ValidateGuestNotNull(guest);
 
@@ -63,7 +63,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
 
             foreach ((dynamic rule, string parameter) in validations)
             {
-                if(rule.Condition)
+                if (rule.Condition)
                 {
                     invalidGuestException.UpsertDataList(
                         key: parameter,
@@ -73,5 +73,5 @@ namespace Sheenam.Api.Services.Foundations.Guests
 
             invalidGuestException.ThrowIfContainsErrors();
         }
-    }   
+    }
 }

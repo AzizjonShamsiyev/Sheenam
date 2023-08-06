@@ -27,18 +27,18 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         {
             int randomNumber = GetRandomNumber();
 
-            while (Enum.IsDefined(typeof(T),randomNumber) is true)
+            while (Enum.IsDefined(typeof(T), randomNumber) is true)
             {
                 randomNumber = GetRandomNumber();
             }
 
-            return(T)(object)randomNumber;
+            return (T)(object)randomNumber;
         }
-        
+
         public GuestServiceTests()
         {
             this.storageBrokerMock = new Mock<IStorageBroker>();
-            this.loggingBrokerMock = new Mock<ILoggingBroker > ();
+            this.loggingBrokerMock = new Mock<ILoggingBroker>();
             this.guestService =
                 new GuestService(
                     storageBroker: this.storageBrokerMock.Object,
@@ -54,14 +54,14 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
 
-        private static string GetRandomString() => 
+        private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
         private static SqlException GetSqlError() =>
             (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
 
 
-        private Expression<Func<Xeption,bool>> SameExceptionAs(Xeption expectedException)
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
             return actualException =>
                 actualException.SameExceptionAs(expectedException);
@@ -74,6 +74,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 .OnType<DateTimeOffset>().Use(date);
 
             return filler;
-        }        
+        }
     }
 }
