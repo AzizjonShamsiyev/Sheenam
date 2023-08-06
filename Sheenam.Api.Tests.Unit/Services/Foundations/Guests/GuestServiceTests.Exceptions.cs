@@ -52,7 +52,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
-       
         [Fact]
         public async Task ShouldTrowDependencyValidationOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
         {
