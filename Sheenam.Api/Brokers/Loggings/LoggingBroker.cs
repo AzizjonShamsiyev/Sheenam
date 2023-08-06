@@ -1,9 +1,4 @@
-﻿//===========================================
-//Copyright (c) Coalition of Good-Hearted Engineers
-//Free To Use To Find Comfort and Peace
-//============================================
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 
 namespace Sheenam.Api.Brokers.Loggings
@@ -12,7 +7,7 @@ namespace Sheenam.Api.Brokers.Loggings
     {
         private readonly ILogger<LoggingBroker> logger;
 
-        public LoggingBroker(ILogger<LoggingBroker> logger)=>
+        public LoggingBroker(ILogger<LoggingBroker> logger) =>
             this.logger = logger;
 
         public void LogError(Exception exception) =>

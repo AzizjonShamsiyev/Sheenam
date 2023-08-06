@@ -11,13 +11,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sheenam.Api.Brokers.Loggings;
 using Sheenam.Api.Brokers.Storage;
+using Sheenam.Api.Services.Foundations.Guests;
+using Sheenam.Api.Tests.Unit.Services.Foundations.Guests;
 
 namespace Sheenam.Api
 {
     public class Startup
     {
         public Startup(IConfiguration configuration) =>
-            Configuration = configuration;        
+            Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -32,6 +34,7 @@ namespace Sheenam.Api
             services.AddDbContext<StorageBroker>();
             services.AddControllers();
             AddBrokers(services);
+            AddFoundationService(services);
 
             services.AddSwaggerGen(option =>
             {
@@ -49,7 +52,7 @@ namespace Sheenam.Api
                 app.UseSwagger();
                 app.UseDeveloperExceptionPage();
                 app.UseSwaggerUI(option => option.SwaggerEndpoint(
-                    url:"/swagger/v1/swagger.json", 
+                    url: "/swagger/v1/swagger.json",
                     name: "Sheenam.Api v1"));
             }
 
@@ -65,6 +68,11 @@ namespace Sheenam.Api
         {
             services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
+        }
+
+        private static void AddFoundationService(IServiceCollection services)
+        {
+            services.AddTransient<IGuestSevice, GuestService>();
         }
     }
 }

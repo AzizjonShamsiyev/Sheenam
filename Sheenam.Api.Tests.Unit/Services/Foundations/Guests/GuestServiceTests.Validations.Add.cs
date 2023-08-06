@@ -13,7 +13,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
     public partial class GuestServiceTests
     {
         [Fact]
-        
+
         public async Task ShouldThrowValidationExceptionOnAddIfGuestIsNullAndLogItAsync()
         {
             //given
@@ -40,13 +40,13 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.storageBrokerMock.VerifyNoOtherCalls();            
+            this.storageBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData(" ")]        
+        [InlineData(" ")]
         public async Task ShouldThowValidationExceptionOnAddIfGuestIsInvalidAndLogItAsync(
             string invalidText)
         {
@@ -93,7 +93,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             await Assert.ThrowsAsync<GuestValidationException>(() =>
                 addGuestTask.AsTask());
 
-            this.loggingBrokerMock.Verify( broker =>
+            this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedGuestValidationException))),
                     Times.Once);

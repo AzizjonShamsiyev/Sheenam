@@ -6,10 +6,8 @@
 using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
 using Moq;
-using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using Sheenam.Api.Models.Foundations.Guests;
 using Sheenam.Api.Models.Foundations.Guests.Exceptions;
-using System.Data;
 using Xunit;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
@@ -52,7 +50,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
-       
         [Fact]
         public async Task ShouldTrowDependencyValidationOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
         {
@@ -78,16 +75,16 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 this.guestService.AddGuestAsync(someGuest);
 
             //then
-            await Assert.ThrowsAsync<GuestDependencyValidationException>(()=>
+            await Assert.ThrowsAsync<GuestDependencyValidationException>(() =>
              addGuestTask.AsTask());
 
-            this.storageBrokerMock.Verify(broker => 
+            this.storageBrokerMock.Verify(broker =>
                 broker.InsertGuestAsync(someGuest),
                  Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedGuestDependencyValidationException))),    
+                    expectedGuestDependencyValidationException))),
                      Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
@@ -116,7 +113,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 this.guestService.AddGuestAsync(someGuest);
 
             //then
-            await Assert.ThrowsAsync<GuestServiceException>(()=>
+            await Assert.ThrowsAsync<GuestServiceException>(() =>
                 addGuestTask.AsTask());
 
             this.storageBrokerMock.Verify(broker =>
@@ -133,4 +130,4 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         }
 
     }
-}   
+}
