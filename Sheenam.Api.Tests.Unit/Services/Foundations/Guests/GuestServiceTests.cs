@@ -22,8 +22,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly IGuestSevice guestService;
 
-        private static int GetRandomNumber() =>
-            new IntRange(min: 2, max: 9).GetValue();
 
         private static T GetInvalidEnum<T>()
         {
@@ -53,18 +51,20 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
-        private static SqlException GetSqlError() =>
-            (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 9).GetValue();
 
         private static string GetRandomString() => 
             new MnemonicString().GetValue();
 
+        private static SqlException GetSqlError() =>
+            (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
+
+
         private Expression<Func<Xeption,bool>> SameExceptionAs(Xeption expectedException)
         {
             return actualException =>
-                actualException.Message == expectedException.Message
-                && actualException.InnerException.Message == expectedException.InnerException.Message
-                &&(actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+                actualException.SameExceptionAs(expectedException);
         }
 
         private static Filler<Guest> CreateGuestFiller(DateTimeOffset date)

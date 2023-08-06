@@ -52,6 +52,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
+       
         [Fact]
         public async Task ShouldTrowDependencyValidationOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
         {
@@ -62,32 +63,32 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             var duplicateKeyException =
                 new DuplicateKeyException(someMessage);
 
-            var alredyExistGuestException =
+            var alreadyExistGuestException =
                 new AlreadyExistGuestException(duplicateKeyException);
 
             var expectedGuestDependencyValidationException =
-                new GuestDependencyException(alredyExistGuestException);
+                new GuestDependencyValidationException(alreadyExistGuestException);
 
             this.storageBrokerMock.Setup(broker =>
                 broker.InsertGuestAsync(someGuest))
-                    .ThrowsAsync(duplicateKeyException);
+                 .ThrowsAsync(duplicateKeyException);
 
             //when
             ValueTask<Guest> addGuestTask =
                 this.guestService.AddGuestAsync(someGuest);
 
             //then
-            await Assert.ThrowsAsync<GuestDependencyValidationException>(() =>
-                addGuestTask.AsTask());
+            await Assert.ThrowsAsync<GuestDependencyValidationException>(()=>
+             addGuestTask.AsTask());
 
-            this.storageBrokerMock.Verify(broker =>
+            this.storageBrokerMock.Verify(broker => 
                 broker.InsertGuestAsync(someGuest),
                  Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedGuestDependencyValidationException))),
-                        Times.Once);
+                    expectedGuestDependencyValidationException))),    
+                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -130,5 +131,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
     }
 }   
